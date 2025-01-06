@@ -5,11 +5,23 @@ class Carousel {
     this.totalSlides = this.slides.children.length || 0;
     this.currentIndex = 0;
 
+    this.dotsContainer = this.carousel.querySelector('.carousel-dots');
+    this.dots = [];
+
+    for (let i = 0; i < this.totalSlides; i++) {
+      const dot = document.createElement('div');
+      dot.classList.add('carousel-dot');
+      dot.addEventListener('click', () => this.showSlide(i));
+      this.dotsContainer.appendChild(dot);
+      this.dots.push(dot);
+    }
+
     this.showSlide = this.showSlide.bind(this);
     this.nextSlide = this.nextSlide.bind(this);
     this.prevSlide = this.prevSlide.bind(this);
 
     this.addEventListeners();
+    this.updateDots();
   }
 
   showSlide(index) {
@@ -18,8 +30,12 @@ class Carousel {
     } else if (index >= this.totalSlides) {
       index = 0;
     }
-    this.slides.style.transform = `translateX(-${index * 100}%)`;
+
     this.currentIndex = index;
+
+    this.slides.style.transform = `translateX(-${index * 100}%)`;
+
+    this.updateDots();
   }
 
   nextSlide() {
@@ -28,6 +44,15 @@ class Carousel {
 
   prevSlide() {
     this.showSlide(this.currentIndex - 1);
+  }
+
+  updateDots() {
+    this.dots.forEach((dot, index) => {
+      dot.classList.remove('active');
+      if (index === this.currentIndex) {
+        dot.classList.add('active');
+      }
+    });
   }
 
   addEventListeners() {
