@@ -1,5 +1,12 @@
-const greet = (name) => {
-  console.log(`Hello, ${name}!`);
-};
+import './style.css';
+import { Carousel } from './carousel';
 
-greet('World');
+document.addEventListener('DOMContentLoaded', () => {
+  const carousels = document.querySelectorAll('.carousel');
+  carousels.forEach((carouselElement) => {
+    const carousel = new Carousel(carouselElement);
+
+    window.nextSlide = carousel.nextSlide;
+    window.prevSlide = carousel.prevSlide;
+  });
+});
