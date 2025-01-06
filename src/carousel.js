@@ -21,6 +21,7 @@ class Carousel {
     this.prevSlide = this.prevSlide.bind(this);
 
     this.addEventListeners();
+    this.autoSlideInterval = setInterval(this.nextSlide, 5000);
     this.updateDots();
   }
 
